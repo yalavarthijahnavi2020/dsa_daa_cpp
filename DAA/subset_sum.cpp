@@ -1,54 +1,56 @@
-#include <iostream>
-#include <vector>
+#include<stdio.h>
+#include<conio.h>
+int s[10], d, n, set[10], count = 0;
+void display (int);
+int flag = 0;
+void main ()
+{
+  int subset (int, int);
+  int i;
 
-using namespace std;
-
-int count;
-
-void printSolution(vector<int> arr, vector<int> solution, int n) {
-    count++;
-    cout << "Solution " << count << ": ";
-    for(int i = 0; i < n; i++) {
-        cout << solution[i] << " ";
-    }  cout << endl;
-    
-    cout << "Elements of the set are: ";
-    for(int i = 0; i < n; i++) {
-        if (solution[i])
-            cout << arr[i] << " ";
-    }  cout << endl;
+  printf ("Enter the number of elements in set\n");
+  scanf ("%d", &n);
+  printf ("Enter the set values\n");
+  for (i = 0; i < n; i++)
+    scanf ("%d", &s[i]);
+  printf ("Enter the sum\n");
+  scanf ("%d", &d);
+  printf ("The progrm output is\n");
+  subset (0, 0);
+  if (flag == 0)
+    printf ("there is no solution");
+  getch ();
 }
 
-void findSubset(vector<int> arr, vector<int> solution, int k, int curSum, int i, int n) {
-    if(i >= n || curSum >= k) {
-        if(curSum == k)
-            printSolution(arr, solution, n);
-        return;
+int subset (int sum, int i)
+{
+  if (sum == d)
+    {
+      flag = 1;
+      display (count);
+      return 0;
     }
-    
-    findSubset(arr, solution, k, curSum, i + 1, n);
-    solution[i] = 1;
-    findSubset(arr, solution, k, curSum + arr[i], i + 1, n);
-}
-
-int main() {
-    int n;
-    cout << "Enter no of elements in the subset: ";
-    cin >> n;
-    
-    vector<int> arr(n);
-    for(int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    
-    int k;
-    cout << "Enter sum: ";
-    cin >> k;
-    
-    vector<int> solution(n, 0);
-    count = 0;
-    
-    findSubset(arr, solution, k, 0, 0, n);
-
+  if (sum > d || i >= n)
     return 0;
+  else
+    {
+      set[count] = s[i];
+
+
+      count++;
+      subset (sum + s[i], i + 1);
+      count--;
+      subset (sum, i + 1);
+    }
 }
+
+void
+display (int count)
+{
+  int i;
+  printf ("{");
+  for (i = 0; i < count; i++)
+    printf ("%d", set[i]);
+  printf ("}");
+}
+
